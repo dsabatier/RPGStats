@@ -46,7 +46,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_CanCreateStats()
+        public void CanCreateStats()
         {
             Assert.DoesNotThrow(() =>
             {
@@ -55,7 +55,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_CanGetBaseValueOfStat()
+        public void CanGetBaseValueOfStat()
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 0);
@@ -64,7 +64,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_ThrowsStatNotFoundException()
+        public void ThrowsStatNotFoundException()
         {
             Assert.Throws<StatNotFoundException>(() =>
             {
@@ -74,7 +74,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_CanAddModifier()
+        public void CanAddModifier()
         {
             Assert.DoesNotThrow(() =>
             {
@@ -85,7 +85,7 @@ namespace Tests
 
         
         [Test]
-        public void Stats_ThrowsExceptionAddingDuplicateStat()
+        public void ThrowsExceptionAddingDuplicateStat()
         {
             StatCollection statCollection = new StatCollection();
 
@@ -98,7 +98,7 @@ namespace Tests
         }
         
         [Test]
-        public void Stats_CanGetModifiedValueOfStat()
+        public void CanGetModifiedValueOfStat()
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
@@ -108,7 +108,18 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_ModificationsDontAffectBaseStat()
+        public void CanRemoveModifier()
+        {
+            StatCollection statCollection = new StatCollection();
+            statCollection.AddStat(Health, 100, 5);
+            var modifier = statCollection.AddModifier(Health, 100, StatModification.ModifierType.Additive);
+            statCollection.RemoveModifier(modifier);
+            
+            Assert.AreEqual(100, statCollection.GetValue(Health, 1));
+        }
+
+        [Test]
+        public void ModificationsDontAffectBaseStat()
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
@@ -118,7 +129,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_AdditiveModsApplyBeforePercentMods()
+        public void AdditiveModsApplyBeforePercentMods()
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
@@ -129,7 +140,7 @@ namespace Tests
         }
 
         [Test]
-        public void Stats_CanAddStatToStats()
+        public void CanAddStatToStats()
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 10);

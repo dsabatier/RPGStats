@@ -38,6 +38,10 @@ namespace RPGStats.Characters
         {
             return _stats.GetValue(Defense, _currentLevel);
         }
-        
+
+        public double GetAttack()
+        {
+            return _stats.GetValue(Attack, _currentLevel);
+        }
     }
 }

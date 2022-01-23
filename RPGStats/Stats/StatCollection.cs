@@ -65,6 +65,14 @@ namespace RPGStats.Stats
 
             return _stats[statKey];
         }
+
+        public void RemoveModifier(StatModification modifier)
+        {
+            if (!_statModifications.Contains(modifier))
+                throw new StatNotFoundException();
+
+            _statModifications.Remove(modifier);
+        }
     }
 
     public class StatAlreadyPresentException : Exception
@@ -72,6 +80,10 @@ namespace RPGStats.Stats
     }
 
     public class StatNotFoundException : Exception
+    {
+    }
+    
+    public class ModifierNotFoundException : Exception
     {
     }
 }
