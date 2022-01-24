@@ -7,5 +7,7 @@
     &lt;TestId&gt;NUnit3x::7077E0D0-D59F-4E51-9441-7C116BDFCCDA::net6.0::Tests.CharacterTests.CanInitsWithDefaultDefense&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::7077E0D0-D59F-4E51-9441-7C116BDFCCDA::net6.0::Tests.CharacterTests.CanCreateCharacterWithName&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::7077E0D0-D59F-4E51-9441-7C116BDFCCDA::net6.0::Tests.CharacterTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::7077E0D0-D59F-4E51-9441-7C116BDFCCDA::net6.0::Tests.CombatTests.CanAddCharacterToCombat&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::7077E0D0-D59F-4E51-9441-7C116BDFCCDA::net6.0::Tests.CombatTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
