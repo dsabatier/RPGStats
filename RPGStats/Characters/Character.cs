@@ -9,20 +9,25 @@ namespace RPGStats.Characters
         private const string Defense = "defense";
         private const string Attack = "attack";
 
-        private string _name = String.Empty;
+        private readonly string _name = String.Empty;
         private int _currentLevel = 0;
         
-        private readonly StatCollection _stats = new();
+        protected readonly StatCollection _stats = new();
 
-        public Character()
+        protected Character(string name)
         {
-            _name = "Unnamed";
+            _name = name;
             _currentLevel = 1;
-            
-            AddDefaultStats();
         }
 
-        private void AddDefaultStats()
+        public static Character Create<T>(string name) where T : Character
+        {
+            var newCharacter = new Character(name);
+            newCharacter.CreateStats();
+            return newCharacter;
+        }
+
+        protected virtual void CreateStats()
         {
             _stats.AddStat(MaxHealth, 100, 10);
             _stats.AddStat(Defense, 100, 10);
@@ -42,6 +47,11 @@ namespace RPGStats.Characters
         public double GetAttack()
         {
             return _stats.GetValue(Attack, _currentLevel);
+        }
+
+        public object? GetName()
+        {
+            return _name;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Tests
     {
         public const string Health = "health";
         public const string Defense = "defense";
+        public const string AddModification = "add";
+        public const string PercentModification = "pct";
         
         [Test]
         public void BaseStatValueIsSetByArg()
@@ -79,7 +81,7 @@ namespace Tests
             Assert.DoesNotThrow(() =>
             {
                 StatCollection statCollection = new StatCollection();
-                statCollection.AddModifier(Health, 100, StatModification.ModifierType.Additive);
+                statCollection.AddModifier(AddModification, Health, 100, StatModification.ModifierType.Additive);
             });
         }
 
@@ -102,7 +104,7 @@ namespace Tests
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
-            statCollection.AddModifier(Health, 100, StatModification.ModifierType.Additive);
+            statCollection.AddModifier(AddModification, Health, 100, StatModification.ModifierType.Additive);
             
             Assert.AreEqual(200, statCollection.GetValue(Health, 1));
         }
@@ -112,10 +114,34 @@ namespace Tests
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
-            var modifier = statCollection.AddModifier(Health, 100, StatModification.ModifierType.Additive);
-            statCollection.RemoveModifier(modifier);
+            var modifier = statCollection.AddModifier(AddModification, Health, 100, StatModification.ModifierType.Additive);
+            statCollection.RemoveModifier(AddModification);
             
             Assert.AreEqual(100, statCollection.GetValue(Health, 1));
+        }
+        
+        [Test]
+        public void RemoveModifierThrowsModifierNotFound()
+        {
+            StatCollection statCollection = new StatCollection();
+
+            Assert.Throws<ModifierNotFoundException>(() =>
+            {
+                statCollection.RemoveModifier(AddModification);
+            });
+        }
+        
+        [Test]
+        public void AddModifierThrowsModifierAlreadyPresent()
+        {
+            StatCollection statCollection = new StatCollection();
+            statCollection.AddStat(Health, 1, 0);
+            statCollection.AddModifier(AddModification, Health, 10, StatModification.ModifierType.Additive);
+            
+            Assert.Throws<ModifierAlreadyPresentException>(() =>
+            {
+                statCollection.AddModifier(AddModification, Health, 10, StatModification.ModifierType.Additive);
+            });
         }
 
         [Test]
@@ -123,7 +149,7 @@ namespace Tests
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
-            statCollection.AddModifier(Health, 100, StatModification.ModifierType.Additive);
+            statCollection.AddModifier(AddModification, Health, 100, StatModification.ModifierType.Additive);
             
             Assert.AreEqual(100, statCollection.GetBaseValue(Health, 1));
         }
@@ -133,8 +159,8 @@ namespace Tests
         {
             StatCollection statCollection = new StatCollection();
             statCollection.AddStat(Health, 100, 5);
-            statCollection.AddModifier(Health, 200, StatModification.ModifierType.Additive);
-            statCollection.AddModifier(Health, 0.2, StatModification.ModifierType.Percent);
+            statCollection.AddModifier(AddModification, Health, 200, StatModification.ModifierType.Additive);
+            statCollection.AddModifier(PercentModification,Health, 0.2, StatModification.ModifierType.Percent);
             
             Assert.AreEqual(100 + 200 * 1.2, statCollection.GetValue(Health, 1));
         }

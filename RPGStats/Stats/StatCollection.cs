@@ -7,7 +7,7 @@ namespace RPGStats.Stats
     public class StatCollection
     {
         private readonly Dictionary<string, Stat> _stats = new();
-        private readonly List<StatModification> _statModifications = new();
+        private readonly Dictionary<string, StatModification> _statModifications = new();
 
         public double GetBaseValue(string statKey, int level)
         {
@@ -46,13 +46,16 @@ namespace RPGStats.Stats
 
         private StatModification[] GetModifications(string statKey)
         {
-            return _statModifications.Where(modification => modification.StatKey.Equals(statKey)).ToArray();
+            return _statModifications.Values.Where(modification => modification.StatKey.Equals(statKey)).ToArray();
         }
 
-        public StatModification AddModifier(string statKey, double amount, StatModification.ModifierType type)
+        public StatModification AddModifier(string key, string statKey, double amount, StatModification.ModifierType type)
         {
-            var statModification = new StatModification(statKey, amount, type);
-            _statModifications.Add(statModification);
+            if (_statModifications.ContainsKey(key))
+                throw new ModifierAlreadyPresentException();
+            
+            var statModification = new StatModification(key, statKey, amount, type);
+            _statModifications[key] = statModification;
             return statModification;
         }
 
@@ -66,13 +69,17 @@ namespace RPGStats.Stats
             return _stats[statKey];
         }
 
-        public void RemoveModifier(StatModification modifier)
+        public void RemoveModifier(string key)
         {
-            if (!_statModifications.Contains(modifier))
-                throw new StatNotFoundException();
+            if (!_statModifications.ContainsKey(key))
+                throw new ModifierNotFoundException();
 
-            _statModifications.Remove(modifier);
+            _statModifications.Remove(key);
         }
+    }
+
+    public class ModifierAlreadyPresentException : Exception
+    {
     }
 
     public class StatAlreadyPresentException : Exception
