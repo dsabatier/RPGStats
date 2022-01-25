@@ -20,6 +20,7 @@ namespace RPGStats.Characters
         {
             var newCharacter = new Character(name);
             newCharacter.CreateStats();
+            
             return newCharacter;
         }
 
@@ -45,7 +46,7 @@ namespace RPGStats.Characters
             return _stats.GetValue(StatKeys.Attack, _currentLevel);
         }
 
-        public object? GetName()
+        public string GetName()
         {
             return _name;
         }
