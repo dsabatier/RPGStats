@@ -6,15 +6,7 @@ namespace Tests
     public class CharacterTests
     {
         private const string Name = "name";
-        [Test]
-        public void CanCreateNewCharacter()
-        {
-            Assert.DoesNotThrow(() =>
-            {
-                Character character = Character.Create<Character>(Name);
-            });
-        }
-
+        
         [Test]
         public void CanInitWithDefaultHealth()
         {
