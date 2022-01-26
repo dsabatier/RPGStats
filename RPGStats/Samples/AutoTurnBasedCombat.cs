@@ -1,9 +1,19 @@
-﻿using RPGStats.Combat;
+﻿using System;
+using RPGStats.Combat;
 
 namespace RPGStats.Samples
 {
     public class AutoTurnBasedCombat : TurnBasedCombat
     {
-        // todo
+        
+    }
+
+    public class AutoCombatState : ICombatState
+    {
+        public event Action? OnComplete;
+        public void Begin()
+        {
+            
+        }
     }
 }

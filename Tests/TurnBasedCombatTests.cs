@@ -158,6 +158,10 @@ namespace Tests
         private class TestCombatState : ICombatState
         {
             public event Action OnComplete;
+            public void Begin()
+            {
+                
+            }
 
             public void Complete()
             {
