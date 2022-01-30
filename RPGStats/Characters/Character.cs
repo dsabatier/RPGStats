@@ -1,12 +1,14 @@
 ﻿using System;
+using RPGStats.Combat;
 using RPGStats.Stats;
 
 namespace RPGStats.Characters
 {
-    public class Character
+    public class Character : IDamageable
     {
         private readonly string _name = String.Empty;
         private int _currentLevel = 0;
+        private double _currentHealth;
         
         protected readonly StatCollection _stats = new();
 
@@ -20,6 +22,7 @@ namespace RPGStats.Characters
         {
             var newCharacter = new Character(name);
             newCharacter.CreateStats();
+            newCharacter._currentHealth = newCharacter._stats.GetValue(StatKeys.Health, newCharacter._currentLevel);
             
             return newCharacter;
         }
@@ -31,7 +34,7 @@ namespace RPGStats.Characters
             _stats.AddStat(StatKeys.Attack, 100, 10);
         }
 
-        public double GetHealth()
+        public double GetMaxHealth()
         {
             return _stats.GetValue(StatKeys.Health, _currentLevel);
         }
@@ -49,6 +52,16 @@ namespace RPGStats.Characters
         public string GetName()
         {
             return _name;
+        }
+
+        public void TakeDamage(IDamage damage)
+        {
+            _currentHealth -= damage.GetAmount();
+        }
+
+        public double GetCurrentHealth()
+        {
+            return _currentHealth;
         }
     }
 }

@@ -2,10 +2,11 @@
 using NUnit.Framework;
 using RPGStats.Characters;
 using RPGStats.Combat;
+using RPGStats.Samples;
 
 namespace Tests
 {
-    public class CombatTests
+    public class TurnBasedCombatTests
     {
         [Test]
         public void CanGetPlayerFromCombat()
@@ -89,7 +90,7 @@ namespace Tests
         {
             bool eventFired = false;
             TestCombatState stateA = new TestCombatState();
-            stateA.OnComplete += () =>
+            stateA.OnComplete += (state) =>
             {
                 eventFired = true;
             };
@@ -157,15 +158,20 @@ namespace Tests
         
         private class TestCombatState : ICombatState
         {
-            public event Action OnComplete;
+            public event Action<ICombatState> OnComplete;
             public void Begin()
             {
                 
             }
 
+            public Character GetOwner()
+            {
+                return Character.Create<Character>(string.Empty);
+            }
+
             public void Complete()
             {
-                OnComplete?.Invoke();
+                OnComplete?.Invoke(this);
             }
         }
     }

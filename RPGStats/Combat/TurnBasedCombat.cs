@@ -61,7 +61,7 @@ namespace RPGStats.Combat
             OnBegin?.Invoke();
         }
 
-        private void HandleStateComplete()
+        private void HandleStateComplete(ICombatState state)
         {
             if (_stateQueue.Count > 0)
             {
@@ -81,6 +81,8 @@ namespace RPGStats.Combat
             _currentState = _stateQueue.First();
             _stateQueue.RemoveAt(0);
             _currentState.OnComplete += HandleStateComplete;
+            
+            _currentState.Begin();
         }
     }
 

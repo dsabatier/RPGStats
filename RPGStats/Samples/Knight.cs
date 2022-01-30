@@ -1,9 +1,11 @@
 ﻿using RPGStats.Characters;
+using RPGStats.Combat;
 
 namespace RPGStats.Samples
 {
     public class Knight : Character
     {
+        private double _currentHealth = 0;
         public Knight(string name) : base(name)
         {
 

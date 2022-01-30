@@ -11,7 +11,7 @@ namespace Tests
         public void CanInitWithDefaultHealth()
         {
             Character character = Character.Create<Character>(Name);
-            Assert.AreEqual(100, character.GetHealth()); 
+            Assert.AreEqual(100, character.GetMaxHealth()); 
         }
         
         [Test]
@@ -40,8 +40,10 @@ namespace Tests
         {
             Character character = Character.Create<TestCustomCharacter>(Name);
             
-            Assert.AreEqual(100, character.GetHealth());
+            Assert.AreEqual(100, character.GetMaxHealth());
         }
+
+
 
         private class TestCustomCharacter : Character
         {
